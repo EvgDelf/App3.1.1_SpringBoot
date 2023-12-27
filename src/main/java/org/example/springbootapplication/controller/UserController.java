@@ -4,11 +4,11 @@ import org.example.springbootapplication.model.User;
 import org.example.springbootapplication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class UserController {
@@ -21,17 +21,17 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public String findAll(Model model) {
-        model.addAttribute("users", userService.findAll());
-        return "home";
+    public ModelAndView findAll() {
+        ModelAndView modelAndView = new ModelAndView("home");
+        modelAndView.addObject("users", userService.findAll());
+        return modelAndView;
     }
-
     @GetMapping("/user-create")
-    public String createUserForm(Model model) {
-        model.addAttribute("user", new User());
-        return "user-create";
+    public ModelAndView createUserForm() {
+        ModelAndView modelAndView = new ModelAndView("user-create");
+        modelAndView.addObject("user", new User());
+        return modelAndView;
     }
-
     @PostMapping("/create")
     public String createUser (@ModelAttribute("user") User user) {
         userService.saveUser(user);
@@ -45,12 +45,11 @@ public class UserController {
     }
 
     @GetMapping("/user-update")
-    public String editPage(@RequestParam("id") Long id, Model model) {
-        model.addAttribute("user", userService.findById(id));
-        return "user-update";
+    public ModelAndView editPage(@RequestParam("id") Long id) {
+        ModelAndView modelAndView = new ModelAndView("user-update");
+        modelAndView.addObject("user", userService.findById(id));
+        return modelAndView;
     }
-
-
     @PostMapping("/update")
     public String updateUser(@ModelAttribute("user") User user){
         userService.editUser(user);
