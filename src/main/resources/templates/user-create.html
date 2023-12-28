@@ -5,7 +5,7 @@
     <title>User create</title>
 </head>
 <body>
-<form action="#" th:action="@{/create}" method="post">
+<form th:action="@{/create}" method="post">
     <label for="name">Name</label>
     <input type="text" th:field="${user.name}" id="name" placeholder="Name">
     <br/>
@@ -18,7 +18,7 @@
     <label for="email">Email</label>
     <input type="text" th:field="${user.email}" id="email" placeholder="Email">
     <br/>
-    <input type="submit" value="Create user">
+    <button type="submit">Create</button>
 </form>
 </body>
 </html>
